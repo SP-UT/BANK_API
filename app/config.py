@@ -5,6 +5,10 @@ class Settings(BaseSettings):
     db_pass: str
     db_host: str
     db_name: str
+    secret_key: str
+    algorithm: str
+    access_token_expire_minutes: str
+
 
     class Config:
         env_file = ".env"
@@ -21,6 +25,15 @@ class Settings(BaseSettings):
             },
             "db_name": {
                 "env": "DB_NAME"
+            },
+            "secret_key": {
+                "env": "SECRET_KEY"
+            },
+            "algorithm": {
+                "env": "ALGORITHM"
+            },
+            "access_token_expire_minutes": {
+                "env": "ACCESS_TOKEN_EXPIRE_MINUTES"
             }
         }
 

@@ -2,10 +2,10 @@ from fastapi import FastAPI
 import psycopg2
 from psycopg2.extras import RealDictCursor
 import time
-from .routers import user
+from .routers import user, auth, admin
 from .database import engine
 from .config import settings
-from . import models
+from . import models, util
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -28,7 +28,10 @@ while True:
                 time.sleep(2)
 
 app.include_router(user.router)
+app.include_router(auth.router)
+app.include_router(admin.router)
 
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
+
