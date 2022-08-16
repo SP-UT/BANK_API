@@ -45,3 +45,21 @@ async def verify_account(id: int, verify: schemas.UserValidate, db: Session = De
     user_search.update(verify.dict(), synchronize_session=False)
     db.commit()
     return user_search.first()
+
+@router.get("/email/", response_model=schemas.UserSearchOut)
+async def get_my_email(email: EmailStr, db: Session = Depends(get_db),current_user: int = Depends(oauth2.get_current_user)):
+    user = db.query(models.LoginId).filter(models.LoginId.email == email).first()
+    if not user:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail = f'Login account {email} - Not Found.'
+                            )
+    return user
+
+@router.get("/pii/", response_model=schemas.UserSearchOut)
+async def get_my_pii(email: EmailStr, first_name = str, last_name = str, db: Session = Depends(get_db),current_user: int = Depends(oauth2.get_current_user)):
+    user = db.query(models.LoginId).filter(models.LoginId.email == email, models.LoginId.first_name == first_name, models.LoginId.last_name == last_name).first()
+    if not user:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail = f'User {first_name} {last_name} does not exist'
+                            )
+    return user

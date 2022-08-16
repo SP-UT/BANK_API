@@ -36,10 +36,10 @@ async def get_my_admin(id: int, db: Session = Depends(get_db),current_admin: int
 
 @router.get("/user_details/{id}", response_model=schemas.UserSearchOut)
 async def get_user_details(id: int, db: Session = Depends(get_db),current_admin: int = Depends(oauth2.get_current_admin)):
-    user = db.query(models.LoginId).filter(models.LoginId.oid == id).first()
-    if not user:
+    admin = db.query(models.LoginId).filter(models.LoginId.oid == id).first()
+    if not admin:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail = f'User {id} does not exist'
                             )
-    return user
+    return admin
 
