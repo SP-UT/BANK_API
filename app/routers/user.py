@@ -48,6 +48,10 @@ async def verify_account(id: int, verify: schemas.UserValidate, db: Session = De
 
 @router.get("/email/", response_model=schemas.UserSearchOut)
 async def get_my_email(email: EmailStr, db: Session = Depends(get_db),current_user: int = Depends(oauth2.get_current_user)):
+    if email != current_user.email:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
+                            detail = f'User {current_user.first_name} {current_user.last_name} not authorized to request this information.'
+                            )
     user = db.query(models.LoginId).filter(models.LoginId.email == email).first()
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
@@ -56,8 +60,12 @@ async def get_my_email(email: EmailStr, db: Session = Depends(get_db),current_us
     return user
 
 @router.get("/pii/", response_model=schemas.UserSearchOut)
-async def get_my_pii(email: EmailStr, first_name = str, last_name = str, db: Session = Depends(get_db),current_user: int = Depends(oauth2.get_current_user)):
-    user = db.query(models.LoginId).filter(models.LoginId.email == email, models.LoginId.first_name == first_name, models.LoginId.last_name == last_name).first()
+async def get_my_pii(email: EmailStr, first_name: str, last_name: str, db: Session = Depends(get_db),current_user: int = Depends(oauth2.get_current_user)):
+    if email != current_user.email:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
+                            detail = f'User {current_user.first_name} {current_user.last_name} not authorized to request this information.'
+                            )
+    user = db.query(models.LoginId).filter(models.LoginId.first_name == first_name, models.LoginId.last_name == last_name, models.LoginId.email == email).first()
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail = f'User {first_name} {last_name} does not exist'
