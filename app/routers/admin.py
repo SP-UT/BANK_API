@@ -1,4 +1,3 @@
-from os import sync
 from typing import List
 from fastapi import FastAPI, Response, status, HTTPException, Depends, APIRouter
 from .. import models, schemas, util, oauth2
