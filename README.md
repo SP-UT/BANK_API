@@ -73,3 +73,8 @@ export DB_HOST=[db_host]
 export DB_USER=[db_user]
 export DB_PASS=[db_pass]
 ```
+
+#### Start the API
+```
+uvicorn app.main:app --reload
+```
