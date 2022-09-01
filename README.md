@@ -78,3 +78,7 @@ export DB_PASS=[db_pass]
 ```
 uvicorn app.main:app --reload
 ```
+
+#### POSTMAN Collection
+
+- Import [POSTMAN Collection](https://github.com/SP-UT/BANK_API/blob/main/BANK_API.postman_collection.json)
