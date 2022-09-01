@@ -1,7 +1,7 @@
 # BANK_API
 ### Database Setup
  - Database Type : PostgreSQL 14
- - DB_NAME=[db]
+ - Database Name : Same as the environment variable `DB_NAME` used for API startup.
  - Tables, Sequences & Indexes
  ```
  CREATE SEQUENCE IF NOT EXISTS tbl_oid_seq START with 10000;
