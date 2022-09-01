@@ -77,4 +77,11 @@ export DB_PASS=[db_pass]
 #### Start the API
 ```
 uvicorn app.main:app --reload
+INFO:     Will watch for changes in these directories: ['[ABSOLUTE_PATH]/BANK_API']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [PID] using watchgod
+Database connection was successful!
+INFO:     Started server process [PID]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
 ```
